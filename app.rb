@@ -91,3 +91,20 @@ get '/unfavorite/:post_id' do
     current_user.favorites.find_by(post_id: params[:post_id]).destroy
     redirect '/'
 end
+
+get '/edit/:id' do
+    @post = Post.find(params[:id])
+    erb :edit
+end
+
+post '/edit/:id' do
+    post = Post.find(params[:id])
+    post.comment = params[:comment]
+    post.save
+    redirect '/home'
+end
+
+get '/delete/:id' do
+    Post.find(params[:id]).destroy
+    redirect '/home'
+end

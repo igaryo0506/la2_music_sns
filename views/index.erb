@@ -17,13 +17,12 @@
 			<% @posts.each do |post| %>
 				<div class="post center-vertical">
 					<img src=<%= post.image_url %> width="125" height="125">
-					<p>artist: <%=post.artist %></p>
+					<p>artist: <%= post.artist %></p>
 					<p>コメント: <%= post.comment %></p>
 					<p>投稿者: <%= post.user.name %><br>
 						<a href="#">フォローする</a><br>
 						<a href="#">フォロー解除</a><br>
 					</p>
-					<%= post.favorites.count %>
 					<p>いいねしたユーザー<br>
 						<% post.favorites.each do |favorite| %>
 							<img src=<%= favorite.user.image_url %> alt="user_image" width="40" height="40">
