@@ -1,26 +1,46 @@
 <section class="first-view center-vertical">
 	<h1>MUSIC SNS!!!</h1>
+	<% if current_user.nil? %>
+	<form method="POST" action="/sign_in">
+		<input type="text" placeholder="ユーザ名" name="user_name">
+		<input type="password" placeholder="パスワード" name="password">
+		<input type="submit" value="ログイン">
+	</form>
 	<div class="login_button">
 	</div>
+	<% end %>
 </section>
-
-<section class="center-vertical">
-	<h1>最新の投稿</h1>
-
-	<div class="post center-vertical">
-		<img src="" width="125" height="125">
-		<p>artist: 〇〇</p>
-		<p>コメント: 〇〇</p>
-		<p>投稿者: 〇〇<br>
-			<a href="#">フォローする</a>
-			<a href="#">">フォロー解除</a><br>
-		</p>
-		<p>いいねしたユーザー<br>
-			<img src="" alt="user_image" width="40" height="40">
-		</p>
-		<a href="#">いいねする</a>
-	</div>
-
-	<%# TODO: ここで分岐 %>
-	<p>投稿がありません</p>
-</section>
+<% if current_user %>
+	<section class="center-vertical">
+		<h1>最新の投稿</h1>
+		<% if @posts %>
+			<% @posts.each do |post| %>
+				<div class="post center-vertical">
+					<img src=<%= post.image_url %> width="125" height="125">
+					<p>artist: <%=post.artist %></p>
+					<p>コメント: <%= post.comment %></p>
+					<p>投稿者: <%= post.user.name %><br>
+						<a href="#">フォローする</a><br>
+						<a href="#">フォロー解除</a><br>
+					</p>
+					<%= post.favorites.count %>
+					<p>いいねしたユーザー<br>
+						<% post.favorites.each do |favorite| %>
+							<img src=<%= favorite.user.image_url %> alt="user_image" width="40" height="40">
+						<% end %>
+					</p>
+					<% if current_user != post.user %>
+						<% if current_user.favorites.find_by(post_id:post.id).nil? %>
+							<a href="/favorite/<%= post.id %>">いいねする</a>
+						<% else %>
+							<a href="/unfavorite/<%= post.id %>">いいねを取り消す</a>
+						<% end %>
+					<% end %>
+				</div>
+			<% end %>
+		<% else %>
+			<%# TODO: ここで分岐 %>
+			<p>投稿がありません</p>
+		<% end %>
+	</section>
+<% end %>

@@ -1,18 +1,61 @@
 <section class="center-vertical">
-	<h1>〇〇の投稿</h1>
-	<p>投稿がありません</p>
+	<h1><%= current_user.name %>の投稿</h1>
+	<% if current_user.posts.count != 0 %>
+		<% current_user.posts.each do |post| %>
+			<div class="post center-vertical">
+					<img src=<%= post.image_url %> width="125" height="125">
+					<p>artist: <%=post.artist %></p>
+					<p>コメント: <%= post.comment %></p>
+					<p>投稿者: <%= post.user.name %><br>
+						<a href="#">フォローする</a><br>
+						<a href="#">フォロー解除</a><br>
+					</p>
+					<p>いいねしたユーザー<br>
+						<% post.favorites.each do |favorite| %>
+							<img src=<%= favorite.user.image_url %> alt="user_image" width="40" height="40">
+						<% end %>
+					</p>
+					<p>
+						<a href="#">編集</a>
+						<a href="#">削除</a>
+					</p>
+				</div>
+		<% end %>
+	<% else %>
+		<p>投稿がありません</p>
+	<% end %>
 </section>
 
 <section class="center-vertical">
-	<h1>〇〇のイイねした投稿</h1>
-	<p>イイねがありません</p>
+	<h1><%= current_user.name %>のイイねした投稿</h1>
+	<% if current_user.favorite_posts.count != 0 %>
+		<% current_user.favorite_posts.each do |post| %>
+			<div class="post center-vertical">
+					<img src=<%= post.image_url %> width="125" height="125">
+					<p>artist: <%=post.artist %></p>
+					<p>コメント: <%= post.comment %></p>
+					<p>投稿者: <%= post.user.name %><br>
+						<a href="#">フォローする</a><br>
+						<a href="#">フォロー解除</a><br>
+					</p>
+					<p>いいねしたユーザー<br>
+						<% post.favorites.each do |favorite| %>
+							<img src=<%= favorite.user.image_url %> alt="user_image" width="40" height="40">
+						<% end %>
+					</p>
+					<a href="/unfavorite/<%= post.id %>">いいねを取り消す</a>
+				</div>
+		<% end %>
+	<% else %>
+		<p>イイねがありません</p>
+	<% end %>
 </section>
 
 <section class="center-vertical">
-	<h1>〇〇 のフォロー</h1>
+	<h1><%= current_user.name %>のフォロー</h1>
 	<a href="#">フォロー解除</a><br>
 </section>
 
 <section class="center-vertical">
-	<h1>〇〇のフォロワー</h1>
+	<h1><%= current_user.name %>のフォロワー</h1>
 </section>

@@ -1,31 +1,33 @@
 <section class="center-vertical">
 	<h1>検索フォーム</h1>
-	<form>
-		<input type="" name="" placeholder="アーティスト名">
-		<input type="" value="検索">
+	<form action="/search" method="post">
+		<input type="text" name="artist" placeholder="アーティスト名">
+		<input type="submit" value="検索">
 	</form>
 	<h2>検索結果</h2>
-
-		<div class="center-hrizontal">
+	<% if @results.nil? %>
+		<%# TODO: 検索結果によって分岐 %>
+		<p>検索結果がありません</p>
+	<% else %>
+		<% @results.each do |result| %>
+			<div class="center-hrizontal">
 				<div class="post center-vertical">
-					<img src="">
-					<p>artistName表示</p>
-					<p>collectionName表示</p>
-					<p>trackName表示</p>
-					<a href="#">サンプル</a>
-					<form>
-						<input type="" value="" name="">
-						<input type="" value=""  name="">
-						<input type="" value="" name="">
-						<input type="" value="" name="">
-						<input type="" value="" name="">
-						<input type="" name="" placeholder="コメント">
+					<img src=<%= result["artworkUrl100"] %>>
+					<p><%= result["artistName"] %></p>
+					<p><%= result["collectionName"] %></p>
+					<p><%= result["trackName"] %></p>
+					<a href=<%= result["previewUrl"] %>>サンプル</a>
+					<form action="/add" method="POST">
+						<input type="hidden" value=<%= result["artworkUrl100"] %> name="image_url">
+						<input type="hidden" value=<%= result["artistName"] %>  name="artist">
+						<input type="hidden" value=<%= result["collectionName"] %> name="album">
+						<input type="hidden" value=<%= result["trackName"] %> name="name">
+						<input type="hidden" value=<%= result["previewUrl"] %> name="preview_url">
+						<input type="text" name="comment" placeholder="コメント">
 						<input type="submit" value="投稿">
 					</form>
 				</div>
-		</div>
-
-	<%# TODO: 検索結果によって分岐 %>
-	<p>検索結果がありません</p>
-
+			</div>
+		<% end %>
+	<% end %>
 </section>

@@ -58,9 +58,13 @@
     align-items: center;
   }
 
-  .center-hrizontal {
+  .center-horizontal {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+  }
+  
+  .vertical-space{
+    margin: 5px 0px;
   }

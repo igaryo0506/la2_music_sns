@@ -6,11 +6,15 @@
 	<link rel="stylesheet" href="/assets/css/index.css">
 	<link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
 <body>
-<nav class="center-hrizontal">
-	<a href="#">MUSIC SNS!!!</a>
-	<a href="#"><img src="" alt="user_image" width="40" height="40"></a></li>
-	<a href="#">search</a></li>
-	<a href="#">logout</a>
+<nav class="center-horizontal">
+	<a href="/">MUSIC SNS!!!</a>
+	<% if current_user.nil? %>
+		<a href="sign_up" method="GET">新規登録</a>
+	<% else %>
+		<a href="/home" method="GET"><img src="" alt="user_image" width="40" height="40"></a></li>
+		<a href="/search" method="GET">search</a></li>
+		<a href="/sign_out" method="GET">logout</a>
+	<% end %>
 </nav>
 <main>
 
