@@ -20,8 +20,13 @@
 					<p>artist: <%= post.artist %></p>
 					<p>コメント: <%= post.comment %></p>
 					<p>投稿者: <%= post.user.name %><br>
-						<a href="#">フォローする</a><br>
-						<a href="#">フォロー解除</a><br>
+					<% if current_user != post.user %>
+						<% if Relationship.find_by(following_id:current_user.id,followed_id:post.user.id).nil? %>
+							<a href="/follow/<%= post.user.id %>">フォローする</a><br>
+						<% else %>
+							<a href="/unfollow/<%= post.user.id %>">フォロー解除</a><br>
+						<% end %>
+					<% end %>
 					</p>
 					<p>いいねしたユーザー<br>
 						<% post.favorites.each do |favorite| %>

@@ -108,3 +108,18 @@ get '/delete/:id' do
     Post.find(params[:id]).destroy
     redirect '/home'
 end
+
+get '/follow/:id' do
+    Relationship.create(
+        followed_id: User.find(params[:id]).id,
+        following_id: current_user.id
+        )
+    puts User.find(params[:id]).follows
+    redirect '/'
+end
+
+
+get '/follow/:id' do
+    current_user.follows.find(params[:id]).destroy
+end
+
