@@ -60,8 +60,8 @@
 	<h1><%= current_user.name %>のフォロー</h1>
 	<% current_user.follows.each do |f| %>
 		<%= f.name %>
+		<a href="/unfollow/<%= f.id %>">フォロー解除</a><br>
 	<% end %>
-	<a href="#">フォロー解除</a><br>
 </section>
 
 <section class="center-vertical">

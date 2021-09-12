@@ -119,7 +119,8 @@ get '/follow/:id' do
 end
 
 
-get '/follow/:id' do
-    current_user.follows.find(params[:id]).destroy
+get '/unfollow/:id' do
+    Relationship.find_by(followed_id:params[:id] ,following_id: current_user.id).destroy
+    redirect '/'
 end
 
